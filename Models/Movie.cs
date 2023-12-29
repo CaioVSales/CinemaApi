@@ -1,4 +1,3 @@
-// Models/Movie.cs
 public class Movie
 {
     public int MovieId { get; set; }

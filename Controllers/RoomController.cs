@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
@@ -21,5 +19,59 @@ public class RoomController : ControllerBase
         return Ok(rooms);
     }
 
-    // Implement other CRUD actions
+    [HttpGet("{id}")]
+    public IActionResult GetRoomById(int id)
+    {
+        var room = _context.Rooms.Include(r => r.Movies).FirstOrDefault(r => r.RoomId == id);
+
+        if (room == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(room);
+    }
+
+    [HttpPost]
+    public IActionResult CreateRoom(Room room)
+    {
+        _context.Rooms.Add(room);
+        _context.SaveChanges();
+
+        return CreatedAtAction(nameof(GetRoomById), new { id = room.RoomId }, room);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateRoom(int id, Room updatedRoom)
+    {
+        var existingRoom = _context.Rooms.FirstOrDefault(r => r.RoomId == id);
+
+        if (existingRoom == null)
+        {
+            return NotFound();
+        }
+
+        existingRoom.RoomNumber = updatedRoom.RoomNumber;
+        existingRoom.Description = updatedRoom.Description;
+
+        _context.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteRoom(int id)
+    {
+        var roomToDelete = _context.Rooms.FirstOrDefault(r => r.RoomId == id);
+
+        if (roomToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _context.Rooms.Remove(roomToDelete);
+        _context.SaveChanges();
+
+        return NoContent();
+    }
 }

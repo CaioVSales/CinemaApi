@@ -1,4 +1,3 @@
-// Models/Room.cs
 public class Room
 {
     public int RoomId { get; set; }

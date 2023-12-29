@@ -1,10 +1,5 @@
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using System;
-using Microsoft.AspNetCore.HttpsPolicy;
 
 
 public class Startup
