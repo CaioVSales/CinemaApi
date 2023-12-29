@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  cinema-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - cinema-db
+
+  cinema-db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: CinemaDb
+    ports:
+      - "3306:3306"
